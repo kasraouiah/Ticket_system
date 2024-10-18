@@ -1,0 +1,30 @@
+version: '3.3'
+ 
+services:
+
+  db:
+    image: postgres
+    ports:
+      - '5432:5432'
+
+    environment:
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=Tickets_database
+
+
+    volumes:
+      - ./data/db:/var/lib/postgresql/main/
+ 
+
+  frontend:
+    container_name: frontend
+    restart: always
+    build:  
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: frontend_image
+    volumes:
+      - ./frontend/nginx:/etc/nginx/conf.d
+    ports:
+      - 81:5173
